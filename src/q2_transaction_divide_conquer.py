@@ -1,0 +1,260 @@
+from dataclasses import dataclass
+from time import perf_counter_ns
+from typing import Callable, Optional
+
+
+@dataclass
+class Transaction:
+    transaction_id: int
+    customer_name: str
+    product_name: str
+    amount: float
+    transaction_date: str
+
+    def __str__(self) -> str:
+        return (
+            f"{self.transaction_id:<5} | {self.customer_name:<15} | "
+            f"{self.product_name:<18} | RM{self.amount:>8.2f} | {self.transaction_date}"
+        )
+
+
+KeyFunction = Callable[[Transaction], int | float | str]
+
+
+def sample_transactions() -> list[Transaction]:
+    return [
+        Transaction(1050, "Aina", "Wireless Mouse", 59.90, "2026-01-12"),
+        Transaction(1012, "Ben", "Keyboard", 129.00, "2026-01-05"),
+        Transaction(1098, "Chloe", "USB-C Cable", 25.50, "2026-01-20"),
+        Transaction(1007, "Daniel", "Laptop Stand", 89.90, "2026-01-02"),
+        Transaction(1066, "Elaine", "Webcam", 149.00, "2026-01-15"),
+        Transaction(1033, "Farid", "Headphones", 199.90, "2026-01-08"),
+        Transaction(1081, "Grace", "Power Bank", 79.90, "2026-01-18"),
+        Transaction(1024, "Hana", "HDMI Cable", 32.00, "2026-01-07"),
+        Transaction(1045, "Ivan", "Monitor Arm", 169.00, "2026-01-11"),
+        Transaction(1072, "Jia", "Phone Charger", 45.00, "2026-01-16"),
+        Transaction(1019, "Kumar", "Mouse Pad", 18.90, "2026-01-06"),
+        Transaction(1091, "Lina", "Tablet Cover", 55.00, "2026-01-19"),
+        Transaction(1003, "Mei", "Bluetooth Speaker", 120.00, "2026-01-01"),
+        Transaction(1060, "Noah", "SSD Drive", 299.00, "2026-01-14"),
+        Transaction(1039, "Olivia", "Desk Lamp", 74.50, "2026-01-09"),
+    ]
+
+
+def display_transactions(transactions: list[Transaction], title: str) -> None:
+    print(f"\n{title}")
+    print("-" * 76)
+    print("ID    | Customer        | Product            | Amount     | Date")
+    print("-" * 76)
+    for transaction in transactions:
+        print(transaction)
+
+
+def merge_sort(
+    transactions: list[Transaction],
+    key: KeyFunction = lambda transaction: transaction.transaction_id,
+    counter: Optional[dict[str, int]] = None,
+) -> list[Transaction]:
+    if counter is not None:
+        counter["calls"] += 1
+
+    if len(transactions) <= 1:
+        return transactions[:]
+
+    middle = len(transactions) // 2
+    left_half = merge_sort(transactions[:middle], key, counter)
+    right_half = merge_sort(transactions[middle:], key, counter)
+    return merge(left_half, right_half, key)
+
+
+def merge(left: list[Transaction], right: list[Transaction], key: KeyFunction) -> list[Transaction]:
+    sorted_items: list[Transaction] = []
+    left_index = 0
+    right_index = 0
+
+    while left_index < len(left) and right_index < len(right):
+        if key(left[left_index]) <= key(right[right_index]):
+            sorted_items.append(left[left_index])
+            left_index += 1
+        else:
+            sorted_items.append(right[right_index])
+            right_index += 1
+
+    sorted_items.extend(left[left_index:])
+    sorted_items.extend(right[right_index:])
+    return sorted_items
+
+
+def binary_search(
+    transactions: list[Transaction],
+    target_id: int,
+    low: int = 0,
+    high: Optional[int] = None,
+) -> Optional[Transaction]:
+    if high is None:
+        high = len(transactions) - 1
+
+    if low > high:
+        return None
+
+    middle = (low + high) // 2
+    middle_transaction = transactions[middle]
+
+    if middle_transaction.transaction_id == target_id:
+        return middle_transaction
+    if target_id < middle_transaction.transaction_id:
+        return binary_search(transactions, target_id, low, middle - 1)
+    return binary_search(transactions, target_id, middle + 1, high)
+
+
+def linear_search(transactions: list[Transaction], target_id: int) -> Optional[Transaction]:
+    for transaction in transactions:
+        if transaction.transaction_id == target_id:
+            return transaction
+    return None
+
+
+def run_performance_comparison() -> dict[str, float]:
+    transactions = sample_transactions()
+    counter = {"calls": 0}
+
+    sort_start = perf_counter_ns()
+    sorted_transactions = merge_sort(transactions, counter=counter)
+    sort_time = perf_counter_ns() - sort_start
+
+    binary_start = perf_counter_ns()
+    binary_search(sorted_transactions, 1066)
+    binary_search(sorted_transactions, 9999)
+    binary_time = perf_counter_ns() - binary_start
+
+    linear_start = perf_counter_ns()
+    linear_search(transactions, 1066)
+    linear_search(transactions, 9999)
+    linear_time = perf_counter_ns() - linear_start
+
+    return {
+        "merge_sort_ns": sort_time,
+        "binary_search_ns": binary_time,
+        "linear_search_ns": linear_time,
+        "recursive_calls": counter["calls"],
+    }
+
+
+def insert_transaction(transactions: list[Transaction]) -> None:
+    transaction_id = int(input("Transaction ID: ").strip())
+    customer_name = input("Customer name: ").strip()
+    product_name = input("Product name: ").strip()
+    amount = float(input("Amount: RM").strip())
+    transaction_date = input("Transaction date (YYYY-MM-DD): ").strip()
+    transactions.append(Transaction(transaction_id, customer_name, product_name, amount, transaction_date))
+    print("Transaction inserted successfully.")
+
+
+def choose_sort_key() -> tuple[str, KeyFunction]:
+    print("1. Sort by transaction ID")
+    print("2. Sort by amount")
+    choice = input("Choose sort attribute: ").strip()
+    if choice == "2":
+        return "amount", lambda transaction: transaction.amount
+    return "transaction ID", lambda transaction: transaction.transaction_id
+
+
+def print_complexity_table() -> None:
+    print("\nTIME COMPLEXITY SUMMARY")
+    print("-" * 48)
+    print(f"{'Operation':<22} | {'Best':<8} | {'Average/Worst':<14}")
+    print("-" * 48)
+    print(f"{'Merge Sort':<22} | {'O(n log n)':<8} | {'O(n log n)':<14}")
+    print(f"{'Binary Search':<22} | {'O(1)':<8} | {'O(log n)':<14}")
+    print(f"{'Linear Search':<22} | {'O(1)':<8} | {'O(n)':<14}")
+
+
+def menu() -> None:
+    transactions = sample_transactions()
+    sorted_transactions: list[Transaction] = []
+
+    while True:
+        print("\nTRANSACTION SYSTEM MENU")
+        print("1. Display all transactions")
+        print("2. Sort transactions using Merge Sort")
+        print("3. Search transaction using Binary Search")
+        print("4. Search transaction using Linear Search")
+        print("5. Insert transaction")
+        print("6. Display time complexity table")
+        print("0. Exit")
+
+        choice = input("Choose an option: ").strip()
+        if choice == "1":
+            display_transactions(transactions, "CURRENT TRANSACTIONS")
+        elif choice == "2":
+            label, key = choose_sort_key()
+            counter = {"calls": 0}
+            sorted_transactions = merge_sort(transactions, key=key, counter=counter)
+            display_transactions(sorted_transactions, f"TRANSACTIONS SORTED BY {label.upper()}")
+            print(f"Recursive calls made by Merge Sort: {counter['calls']}")
+        elif choice == "3":
+            if not sorted_transactions:
+                sorted_transactions = merge_sort(transactions)
+            target_id = int(input("Enter transaction ID: ").strip())
+            result = binary_search(sorted_transactions, target_id)
+            print(result if result else "Transaction not found.")
+        elif choice == "4":
+            target_id = int(input("Enter transaction ID: ").strip())
+            result = linear_search(transactions, target_id)
+            print(result if result else "Transaction not found.")
+        elif choice == "5":
+            insert_transaction(transactions)
+        elif choice == "6":
+            print_complexity_table()
+        elif choice == "0":
+            print("Goodbye.")
+            break
+        else:
+            print("Invalid option.")
+
+
+def demo() -> None:
+    transactions = sample_transactions()
+    display_transactions(transactions, "BEFORE SORTING")
+
+    counter = {"calls": 0}
+    sorted_transactions = merge_sort(transactions, counter=counter)
+    display_transactions(sorted_transactions, "AFTER SORTING BY TRANSACTION ID")
+    print(f"\nRecursive calls made by Merge Sort: {counter['calls']}")
+
+    print("\nBINARY SEARCH DEMO")
+    print("-" * 48)
+    for target in [1066, 9999]:
+        result = binary_search(sorted_transactions, target)
+        print(f"Binary search for {target}: {result if result else 'Transaction not found'}")
+
+    print("\nLINEAR SEARCH DEMO")
+    print("-" * 48)
+    for target in [1066, 9999]:
+        result = linear_search(transactions, target)
+        print(f"Linear search for {target}: {result if result else 'Transaction not found'}")
+
+    sorted_by_amount = merge_sort(transactions, key=lambda transaction: transaction.amount)
+    display_transactions(sorted_by_amount, "OPTIONAL FEATURE: SORTED BY AMOUNT")
+    print_complexity_table()
+
+    results = run_performance_comparison()
+    print("\nPERFORMANCE COMPARISON")
+    print("-" * 48)
+    print(f"Merge Sort time (ns)   : {int(results['merge_sort_ns'])}")
+    print(f"Binary Search time (ns): {int(results['binary_search_ns'])}")
+    print(f"Linear Search time (ns): {int(results['linear_search_ns'])}")
+    print(f"Merge Sort calls       : {int(results['recursive_calls'])}")
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Transaction divide and conquer system")
+    parser.add_argument("--demo", action="store_true", help="Run automatic demo output")
+    args = parser.parse_args()
+
+    if args.demo:
+        demo()
+    else:
+        menu()

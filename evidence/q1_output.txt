@@ -1,0 +1,48 @@
+
+PHARMACY HASH TABLE
+--------------------------------------------------------------------------------------------
+Bucket 00: EMPTY
+Bucket 01: EMPTY
+Bucket 02: EMPTY
+Bucket 03: EMPTY
+Bucket 04: EMPTY
+Bucket 05: EMPTY
+Bucket 06: EMPTY
+Bucket 07: EMPTY
+Bucket 08: EMPTY
+Bucket 09: EMPTY
+Bucket 10: EMPTY
+Bucket 11: EMPTY
+Bucket 12: EMPTY
+Bucket 13: EMPTY
+Bucket 14: EMPTY
+Bucket 15: EMPTY
+Bucket 16: EMPTY
+Bucket 17: M010   | First Aid Cream        | Cream        | RM  13.75 | Qty: 40  | Exp: 2027-11-24
+Bucket 18: M001   | Paracetamol 500mg      | Tablet       | RM   6.50 | Qty: 120 | Exp: 2027-04-15
+Bucket 19: M002   | Cough Syrup            | Syrup        | RM  12.90 | Qty: 45  | Exp: 2026-12-01
+Bucket 20: M003   | Vitamin C              | Supplement   | RM  18.00 | Qty: 80  | Exp: 2028-02-20
+Bucket 21: M004   | Antacid                | Tablet       | RM   9.40 | Qty: 60  | Exp: 2027-08-11
+Bucket 22: M005   | Ibuprofen 200mg        | Tablet       | RM   8.90 | Qty: 100 | Exp: 2027-03-06
+Bucket 23: M006   | Eye Drops              | Drops        | RM  15.50 | Qty: 35  | Exp: 2026-10-30
+Bucket 24: M007   | Hand Sanitizer         | Hygiene      | RM   7.20 | Qty: 150 | Exp: 2029-01-01
+Bucket 25: M008   | Allergy Relief         | Tablet       | RM  11.30 | Qty: 72  | Exp: 2027-09-18
+Bucket 26: M009   | Oral Rehydration       | Sachet       | RM   5.80 | Qty: 90  | Exp: 2028-07-07
+Bucket 27: M011   | Zinc Tablets           | Supplement   | RM  16.20 | Qty: 55  | Exp: 2028-01-15
+Bucket 28: M012   | Nasal Spray            | Spray        | RM  19.90 | Qty: 30  | Exp: 2026-09-12
+Bucket 29: EMPTY
+Bucket 30: EMPTY
+
+SEARCH DEMO
+--------------------------------------------------------
+Search M001: M001   | Paracetamol 500mg      | Tablet       | RM   6.50 | Qty: 120 | Exp: 2027-04-15
+Search M008: M008   | Allergy Relief         | Tablet       | RM  11.30 | Qty: 72  | Exp: 2027-09-18
+Search M999: Product not found
+
+HASH TABLE VS ARRAY SEARCH EXPERIMENT
+--------------------------------------------------------
+Total searches performed      : 25000
+Hash table total time (ns)    : 32841000
+Array linear total time (ns)  : 294663400
+Hash table average (ns)       : 1313.64
+Array linear average (ns)     : 11786.54
