@@ -1,88 +1,73 @@
 # Advanced Algorithm Assignment
 
-This repository contains the source code and evidence pack for the Advanced Algorithm assignment. It includes three Python programs:
+This repository contains three Python programs for the assignment.
 
-- `src/q1_pharmacy_hash_table.py` - Pharmacy inventory using a hash table with linear probing.
-- `src/q2_transaction_divide_conquer.py` - Transaction sorting/searching using merge sort, binary search, and linear search.
-- `src/q3_factorial_threading.py` - Factorial timing experiment with and without multithreading.
-
-## Project Structure
+## Files
 
 ```text
 advanced-algorithm-assignment/
-|-- .github/workflows/python-check.yml
-|-- evidence/
-|   |-- q1_*.png and q1_*.txt
-|   |-- q2_*.png and q2_*.txt
-|   `-- q3_*.png and q3_*.txt
-|-- src/
-|   |-- q1_pharmacy_hash_table.py
-|   |-- q2_transaction_divide_conquer.py
-|   `-- q3_factorial_threading.py
-|-- tools/
-|   `-- make_evidence.py
-|-- REPORT_TEMPLATE.md
-|-- RUN_ALL_DEMOS.ps1
-|-- requirements.txt
+|-- q1_pharmacy_hash_table.py
+|-- q2_transaction_divide_conquer.py
+|-- q3_factorial_threading.py
+|-- .gitignore
 `-- README.md
+```
+
+## Question 1
+
+`q1_pharmacy_hash_table.py`
+
+Pharmacy inventory system using a hash table with linear probing. It includes product records, display, insert/update, search, and a search performance comparison against a one-dimensional array.
+
+Run demo:
+
+```powershell
+python .\q1_pharmacy_hash_table.py --demo
+```
+
+Run menu:
+
+```powershell
+python .\q1_pharmacy_hash_table.py
+```
+
+## Question 2
+
+`q2_transaction_divide_conquer.py`
+
+Transaction system using Merge Sort, Binary Search, and Linear Search. It includes mandatory menu features and optional features such as inserting transactions, sorting by amount, counting recursive calls, and showing a complexity table.
+
+Run demo:
+
+```powershell
+python .\q2_transaction_divide_conquer.py --demo
+```
+
+Run menu:
+
+```powershell
+python .\q2_transaction_divide_conquer.py
+```
+
+## Question 3
+
+`q3_factorial_threading.py`
+
+Factorial timing experiment comparing multithreaded execution and sequential execution for `50!`, `100!`, and `200!`.
+
+Run experiment:
+
+```powershell
+python .\q3_factorial_threading.py --demo
 ```
 
 ## Requirements
 
 - Python 3.10 or newer
-- Pillow, only needed if regenerating screenshot evidence with `tools/make_evidence.py`
+- No external Python packages are required
 
-Install the optional evidence dependency:
-
-```powershell
-python -m pip install -r requirements.txt
-```
-
-## How to Run the Programs
-
-If Python is installed normally:
+## Quick Check
 
 ```powershell
-python .\src\q1_pharmacy_hash_table.py --demo
-python .\src\q2_transaction_divide_conquer.py --demo
-python .\src\q3_factorial_threading.py --demo
+python -m compileall .\q1_pharmacy_hash_table.py .\q2_transaction_divide_conquer.py .\q3_factorial_threading.py
 ```
-
-To run all demo outputs at once on Windows PowerShell:
-
-```powershell
-.\RUN_ALL_DEMOS.ps1
-```
-
-Interactive menus:
-
-```powershell
-python .\src\q1_pharmacy_hash_table.py
-python .\src\q2_transaction_divide_conquer.py
-```
-
-Question 3 is an experiment program and runs its 10-round timing comparison directly.
-
-## Evidence Pack
-
-The `evidence/` folder contains ready-to-use code screenshots and output screenshots for the report. To regenerate them:
-
-```powershell
-python .\tools\make_evidence.py
-```
-
-Generated screenshots and output text files are saved back into `evidence/`.
-
-## Verification
-
-Compile all Python files:
-
-```powershell
-python -m compileall .\src .\tools
-```
-
-GitHub Actions also runs a basic check on every push to confirm that the Python files compile and the demo programs execute.
-
-## Report Support
-
-Use `REPORT_TEMPLATE.md` as a checklist for placing screenshots and writing your own explanation. The final report wording should be written personally so you can explain it confidently during VIVA.
