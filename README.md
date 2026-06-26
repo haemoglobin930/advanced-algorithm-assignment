@@ -1,8 +1,6 @@
-# Pharmacy DSA Assignment
+# Advanced Algorithm Assignment
 
-GitHub repository: <https://github.com/haemoglobin930/pharmacy-dsa-assignment>
-
-This repository contains the source code and evidence pack for the Data Structures and Algorithms assignment. It includes three Python programs:
+This repository contains the source code and evidence pack for the Advanced Algorithm assignment. It includes three Python programs:
 
 - `src/q1_pharmacy_hash_table.py` - Pharmacy inventory using a hash table with linear probing.
 - `src/q2_transaction_divide_conquer.py` - Transaction sorting/searching using merge sort, binary search, and linear search.
@@ -11,7 +9,7 @@ This repository contains the source code and evidence pack for the Data Structur
 ## Project Structure
 
 ```text
-pharmacy-dsa-assignment/
+advanced-algorithm-assignment/
 |-- .github/workflows/python-check.yml
 |-- evidence/
 |   |-- q1_*.png and q1_*.txt
