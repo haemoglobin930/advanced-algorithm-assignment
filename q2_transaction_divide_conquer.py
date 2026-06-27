@@ -58,12 +58,18 @@ def merge_sort(
     if counter is not None:
         counter["calls"] += 1
 
+    # Base case: a list with 0 or 1 item is already sorted
     if len(transactions) <= 1:
         return transactions[:]
 
+    # Divide: split the list into two halves
     middle = len(transactions) // 2
+
+    # Conquer: recursively sort both halves
     left_half = merge_sort(transactions[:middle], key, counter)
     right_half = merge_sort(transactions[middle:], key, counter)
+
+    # Combine: merge the two sorted halves
     return merge(left_half, right_half, key)
 
 
@@ -193,10 +199,12 @@ def menu() -> None:
             display_transactions(sorted_transactions, f"TRANSACTIONS SORTED BY {label.upper()}")
             print(f"Recursive calls made by Merge Sort: {counter['calls']}")
         elif choice == "3":
-            if not sorted_transactions:
-                sorted_transactions = merge_sort(transactions)
+            id_sorted_transactions = merge_sort(
+                transactions,
+                key=lambda transaction: transaction.transaction_id,
+            )
             target_id = int(input("Enter transaction ID: ").strip())
-            result = binary_search(sorted_transactions, target_id)
+            result = binary_search(id_sorted_transactions, target_id)
             print(result if result else "Transaction not found.")
         elif choice == "4":
             target_id = int(input("Enter transaction ID: ").strip())
