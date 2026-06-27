@@ -178,8 +178,9 @@ def print_complexity_table() -> None:
 def menu() -> None:
     transactions = sample_transactions()
     sorted_transactions: list[Transaction] = []
+    choice = ""
 
-    while True:
+    while choice != "0":
         print("\nTRANSACTION SYSTEM MENU")
         print("1. Display all transactions")
         print("2. Sort transactions using Merge Sort")
@@ -216,7 +217,6 @@ def menu() -> None:
             print_complexity_table()
         elif choice == "0":
             print("Goodbye.")
-            break
         else:
             print("Invalid option.")
 

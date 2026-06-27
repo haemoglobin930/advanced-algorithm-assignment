@@ -167,8 +167,9 @@ def insert_product_from_user(table: HashTable) -> None:
 
 def menu() -> None:
     table, _ = build_inventory()
+    choice = ""
 
-    while True:
+    while choice != "0":
         print("\nPHARMACY INVENTORY MENU")
         print("1. Display all products")
         print("2. Insert or update product")
@@ -189,7 +190,6 @@ def menu() -> None:
             print_experiment_results(run_search_experiment())
         elif choice == "0":
             print("Goodbye.")
-            break
         else:
             print("Invalid option.")
 
