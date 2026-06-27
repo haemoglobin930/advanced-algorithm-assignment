@@ -19,13 +19,7 @@ advanced-algorithm-assignment/
 
 Pharmacy inventory system using a hash table with linear probing. It includes product records, display, insert/update, search, and a search performance comparison against a one-dimensional array.
 
-Run demo:
-
-```powershell
-python .\q1_pharmacy_hash_table.py --demo
-```
-
-Run menu:
+Run program:
 
 ```powershell
 python .\q1_pharmacy_hash_table.py
@@ -37,13 +31,7 @@ python .\q1_pharmacy_hash_table.py
 
 Transaction system using Merge Sort, Binary Search, and Linear Search. It includes mandatory menu features and optional features such as inserting transactions, sorting by amount, counting recursive calls, and showing a complexity table.
 
-Run demo:
-
-```powershell
-python .\q2_transaction_divide_conquer.py --demo
-```
-
-Run menu:
+Run program:
 
 ```powershell
 python .\q2_transaction_divide_conquer.py
@@ -55,10 +43,10 @@ python .\q2_transaction_divide_conquer.py
 
 Factorial timing experiment comparing multithreaded execution and sequential execution for `50!`, `100!`, and `200!`.
 
-Run experiment:
+Run program:
 
 ```powershell
-python .\q3_factorial_threading.py --demo
+python .\q3_factorial_threading.py
 ```
 
 ## Requirements

@@ -109,13 +109,4 @@ def print_result_summary(results: dict[int, FactorialResult]) -> None:
 
 
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Factorial threading experiment")
-    parser.add_argument("--demo", action="store_true", help="Run 10-round timing experiment")
-    args = parser.parse_args()
-
-    if args.demo:
-        run_experiment(rounds=10)
-    else:
-        run_experiment(rounds=10)
+    run_experiment(rounds=10)

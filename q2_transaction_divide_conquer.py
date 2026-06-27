@@ -221,48 +221,5 @@ def menu() -> None:
             print("Invalid option.")
 
 
-def demo() -> None:
-    transactions = sample_transactions()
-    display_transactions(transactions, "BEFORE SORTING")
-
-    counter = {"calls": 0}
-    sorted_transactions = merge_sort(transactions, counter=counter)
-    display_transactions(sorted_transactions, "AFTER SORTING BY TRANSACTION ID")
-    print(f"\nRecursive calls made by Merge Sort: {counter['calls']}")
-
-    print("\nBINARY SEARCH DEMO")
-    print("-" * 48)
-    for target in [1066, 9999]:
-        result = binary_search(sorted_transactions, target)
-        print(f"Binary search for {target}: {result if result else 'Transaction not found'}")
-
-    print("\nLINEAR SEARCH DEMO")
-    print("-" * 48)
-    for target in [1066, 9999]:
-        result = linear_search(transactions, target)
-        print(f"Linear search for {target}: {result if result else 'Transaction not found'}")
-
-    sorted_by_amount = merge_sort(transactions, key=lambda transaction: transaction.amount)
-    display_transactions(sorted_by_amount, "OPTIONAL FEATURE: SORTED BY AMOUNT")
-    print_complexity_table()
-
-    results = run_performance_comparison()
-    print("\nPERFORMANCE COMPARISON")
-    print("-" * 48)
-    print(f"Merge Sort time (ns)   : {int(results['merge_sort_ns'])}")
-    print(f"Binary Search time (ns): {int(results['binary_search_ns'])}")
-    print(f"Linear Search time (ns): {int(results['linear_search_ns'])}")
-    print(f"Merge Sort calls       : {int(results['recursive_calls'])}")
-
-
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Transaction divide and conquer system")
-    parser.add_argument("--demo", action="store_true", help="Run automatic demo output")
-    args = parser.parse_args()
-
-    if args.demo:
-        demo()
-    else:
-        menu()
+    menu()

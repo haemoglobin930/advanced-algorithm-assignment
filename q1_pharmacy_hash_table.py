@@ -204,25 +204,5 @@ def print_experiment_results(results: dict[str, float]) -> None:
     print(f"Array linear average (ns)     : {results['array_average_ns']:.2f}")
 
 
-def demo() -> None:
-    table, _ = build_inventory()
-    table.display()
-    print("\nSEARCH DEMO")
-    print("-" * 56)
-    for key in ["M001", "M008", "M999"]:
-        result = table.search(key)
-        print(f"Search {key}: {result if result else 'Product not found'}")
-    print_experiment_results(run_search_experiment())
-
-
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Pharmacy hash table inventory system")
-    parser.add_argument("--demo", action="store_true", help="Run automatic demo output")
-    args = parser.parse_args()
-
-    if args.demo:
-        demo()
-    else:
-        menu()
+    menu()
