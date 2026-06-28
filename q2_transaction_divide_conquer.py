@@ -120,7 +120,7 @@ def linear_search(transactions: list[Transaction], target_id: int) -> Optional[T
     return None
 
 
-def run_performance_comparison() -> dict[str, float]:
+def run_performance_comparison(target_id: int) -> dict[str, float]:
     transactions = sample_transactions()
     counter = {"calls": 0}
 
@@ -129,13 +129,11 @@ def run_performance_comparison() -> dict[str, float]:
     sort_time = perf_counter_ns() - sort_start
 
     binary_start = perf_counter_ns()
-    binary_search(sorted_transactions, 1066)
-    binary_search(sorted_transactions, 9999)
+    binary_result = binary_search(sorted_transactions, target_id)
     binary_time = perf_counter_ns() - binary_start
 
     linear_start = perf_counter_ns()
-    linear_search(transactions, 1066)
-    linear_search(transactions, 9999)
+    linear_result = linear_search(transactions, target_id)
     linear_time = perf_counter_ns() - linear_start
 
     return {
@@ -143,6 +141,8 @@ def run_performance_comparison() -> dict[str, float]:
         "binary_search_ns": binary_time,
         "linear_search_ns": linear_time,
         "recursive_calls": counter["calls"],
+        "binary_found": binary_result is not None,
+        "linear_found": linear_result is not None,
     }
 
 
@@ -175,16 +175,6 @@ def print_complexity_table() -> None:
     print(f"{'Linear Search':<22} | {'O(1)':<8} | {'O(n)':<14}")
 
 
-def print_performance_comparison(results: dict[str, float]) -> None:
-    print("\nMERGE SORT, BINARY SEARCH AND LINEAR SEARCH PERFORMANCE")
-    print("-" * 68)
-    print(f"Merge Sort time (ns)     : {int(results['merge_sort_ns'])}")
-    print(f"Binary Search time (ns)  : {int(results['binary_search_ns'])}")
-    print(f"Linear Search time (ns)  : {int(results['linear_search_ns'])}")
-    print(f"Merge Sort recursive calls: {int(results['recursive_calls'])}")
-    print("Search keys tested       : 1066 (existing), 9999 (not found)")
-
-
 def menu() -> None:
     transactions = sample_transactions()
     sorted_transactions: list[Transaction] = []
@@ -198,7 +188,6 @@ def menu() -> None:
         print("4. Search transaction using Linear Search")
         print("5. Insert transaction")
         print("6. Display time complexity table")
-        print("7. Compare search/sort performance")
         print("0. Exit")
 
         choice = input("Choose an option: ").strip()
@@ -211,23 +200,30 @@ def menu() -> None:
             display_transactions(sorted_transactions, f"TRANSACTIONS SORTED BY {label.upper()}")
             print(f"Recursive calls made by Merge Sort: {counter['calls']}")
         elif choice == "3":
+            sort_start = perf_counter_ns()
             id_sorted_transactions = merge_sort(
                 transactions,
                 key=lambda transaction: transaction.transaction_id,
             )
+            sort_time = perf_counter_ns() - sort_start
             target_id = int(input("Enter transaction ID: ").strip())
+            search_start = perf_counter_ns()
             result = binary_search(id_sorted_transactions, target_id)
+            search_time = perf_counter_ns() - search_start
             print(result if result else "Transaction not found.")
+            print(f"Merge Sort preparation time (ns): {sort_time}")
+            print(f"Binary Search time (ns)         : {search_time}")
         elif choice == "4":
             target_id = int(input("Enter transaction ID: ").strip())
+            search_start = perf_counter_ns()
             result = linear_search(transactions, target_id)
+            search_time = perf_counter_ns() - search_start
             print(result if result else "Transaction not found.")
+            print(f"Linear Search time (ns): {search_time}")
         elif choice == "5":
             insert_transaction(transactions)
         elif choice == "6":
             print_complexity_table()
-        elif choice == "7":
-            print_performance_comparison(run_performance_comparison())
         elif choice == "0":
             print("Goodbye.")
         else:
