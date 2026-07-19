@@ -15,7 +15,7 @@ class FactorialResult:
         return self.end_ns - self.start_ns
 
 
-def factorial_number(number: int) -> int:
+def factorial_number(number: int) -> int:#**1
     result = 1
     for multiplier in range(2, number + 1):
         result *= multiplier
@@ -29,7 +29,7 @@ def factorial_worker(number: int, results: dict[int, FactorialResult]) -> None:
     results[number] = FactorialResult(number, value, start_ns, end_ns)
 
 
-def run_threaded_round(numbers: list[int]) -> tuple[int, dict[int, FactorialResult]]:
+def run_threaded_round(numbers: list[int]) -> tuple[int, dict[int, FactorialResult]]: #**2
     results: dict[int, FactorialResult] = {}
     threads: list[Thread] = []
 
@@ -63,7 +63,7 @@ def run_sequential_round(numbers: list[int]) -> tuple[int, dict[int, FactorialRe
 
 
 def run_experiment(rounds: int = 10) -> tuple[list[int], list[int]]:
-    numbers = [50, 100, 200]
+    numbers = [50, 100, 200] #**3
     threaded_times: list[int] = []
     sequential_times: list[int] = []
 
@@ -74,7 +74,7 @@ def run_experiment(rounds: int = 10) -> tuple[list[int], list[int]]:
         threaded_times.append(total_ns)
         print(f"Round {round_number:02d} threaded total time (ns): {total_ns}")
 
-    threaded_average = sum(threaded_times) / len(threaded_times)
+    threaded_average = sum(threaded_times) / len(threaded_times)#**4
     print(f"Threaded average time (ns): {threaded_average:.2f}")
     print_result_summary(results)
 

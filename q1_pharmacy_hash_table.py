@@ -19,25 +19,25 @@ class Medicine:
         )
 
 
-class HashTable:
+class HashTable: #***
     def __init__(self, size: int = 31) -> None:
         self.size = size
         self.buckets: list[Optional[Medicine]] = [None] * size
         self.count = 0
 
-    def _hash(self, key: str) -> int:
+    def _hash(self, key: str) -> int:#**
         total = 0
         for character in key:
             total = (total * 31 + ord(character)) % self.size
         return total % self.size
 
-    def insert(self, medicine: Medicine) -> bool:
+    def insert(self, medicine: Medicine) -> bool:#**
         if self.count >= self.size:
             return False
 
         start_index = self._hash(medicine.product_id)
         for step in range(self.size):
-            index = (start_index + step) % self.size
+            index = (start_index + step) % self.size #**
             current = self.buckets[index]
 
             if current is None:

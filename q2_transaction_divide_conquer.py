@@ -21,7 +21,7 @@ class Transaction:
 KeyFunction = Callable[[Transaction], int | float | str]
 
 
-def sample_transactions() -> list[Transaction]:
+def sample_transactions() -> list[Transaction]: #**1
     return [
         Transaction(1050, "Aina", "Wireless Mouse", 59.90, "2026-01-12"),
         Transaction(1012, "Ben", "Keyboard", 129.00, "2026-01-05"),
@@ -50,7 +50,7 @@ def display_transactions(transactions: list[Transaction], title: str) -> None:
         print(transaction)
 
 
-def merge_sort(
+def merge_sort(##3
     transactions: list[Transaction],
     key: KeyFunction = lambda transaction: transaction.transaction_id,
     counter: Optional[dict[str, int]] = None,
@@ -91,7 +91,7 @@ def merge(left: list[Transaction], right: list[Transaction], key: KeyFunction) -
     return sorted_items
 
 
-def binary_search(
+def binary_search(#**2
     transactions: list[Transaction],
     target_id: int,
     low: int = 0,
@@ -201,7 +201,7 @@ def menu() -> None:
             print(f"Recursive calls made by Merge Sort: {counter['calls']}")
         elif choice == "3":
             sort_start = perf_counter_ns()
-            id_sorted_transactions = merge_sort(
+            id_sorted_transactions = merge_sort( #**4
                 transactions,
                 key=lambda transaction: transaction.transaction_id,
             )
